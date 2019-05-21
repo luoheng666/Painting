@@ -19,11 +19,8 @@ public class CategoryListServlet extends HttpServlet {
     private CanvasService service;
     private CategoryService categoryService;
     private List<Canvas> canvas;
-    @Override
-    public void init() throws ServletException {
-        service=new CanvasService();
-        categoryService=new CategoryService();
-    }
+	//增加了分页功能
+   
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String categoryId=request.getParameter("categoryId");
@@ -31,6 +28,7 @@ public class CategoryListServlet extends HttpServlet {
         String categoryName=categoryService.getCategoryById(Long.valueOf(categoryId)).getName();
         int count=service.getCanvasCountByCategoryId(Long.valueOf(categoryId));
         int page=1;
+		//页数
         int pages=(count+1)/2;
         String get=request.getParameter("get");
         if(null!=get)
@@ -65,6 +63,7 @@ public class CategoryListServlet extends HttpServlet {
             }
         }
         canvas=service.getCanvasByPageAndCategoryId(Long.valueOf(categoryId),page,2);
+		//设置属性
         request.setAttribute("page",page);
         request.setAttribute("categoryId",categoryId);
         if(null!=canvas&&canvas.size()>0)
@@ -73,6 +72,12 @@ public class CategoryListServlet extends HttpServlet {
         }
         request.setAttribute("categoryName",categoryName);
         request.getRequestDispatcher("/WEB-INF/views/correct/canvasByCategoryId.jsp").forward(request,response);
+    }
+	
+	 @Override
+    public void init() throws ServletException {
+        service=new CanvasService();
+        categoryService=new CategoryService();
     }
 
     @Override

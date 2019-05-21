@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+//登录功能的完善
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     //处理登录逻辑
@@ -14,6 +15,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
+		//是否记住密码功能
         String remember=request.getParameter("remember");
         if(null!=username&&!username.equals("")&&username.equals(password))
         {
@@ -48,10 +50,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
 
     @Override
     public void destroy() {
@@ -61,5 +59,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+    }
+	
+	
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 }

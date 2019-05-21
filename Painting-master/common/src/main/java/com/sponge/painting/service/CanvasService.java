@@ -7,24 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//油画业务层
 public class CanvasService {
     private SqlSession sqlSession;
     private List<Canvas> canvas;
-    //获取全部油画
-    public List<Canvas> getCanvas()
-    {
-        try{
-            sqlSession=getSqlSession();
-            canvas=sqlSession.selectList("getCanvas");
-        }catch (Exception  e)
-        {
-            e.printStackTrace();
-        }finally {
-            sqlSession.close();
-        }
-        return canvas;
-    }
+
 
     //根据页数获取油画
     public List<Canvas> getCanvasByPage(int page,int count)
@@ -36,6 +23,21 @@ public class CanvasService {
             map.put("count",count);
             canvas=sqlSession.selectList("getCanvas",map);
         }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            sqlSession.close();
+        }
+        return canvas;
+    }
+	
+	    //获取全部油画
+    public List<Canvas> getCanvas()
+    {
+        try{
+            sqlSession=getSqlSession();
+            canvas=sqlSession.selectList("getCanvas");
+        }catch (Exception  e)
         {
             e.printStackTrace();
         }finally {
@@ -64,21 +66,7 @@ public class CanvasService {
         return canvas;
     }
 
-    //获取油画的数量
-    public int getCanvasCount()
-    {
-        List<Integer> integers=null;
-        try{
-            sqlSession=getSqlSession();
-            integers=sqlSession.selectList("getCanvasCount");
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }finally {
-            sqlSession.close();
-        }
-        return integers.get(0);
-    }
+    
 
     //根据目录id获取油画
     public List<Canvas> getCanvasByCategoryId(Long categoryId)
@@ -126,6 +114,22 @@ public class CanvasService {
             sqlSession.close();
         }
         return count;
+    }
+	
+	//获取油画的数量
+    public int getCanvasCount()
+    {
+        List<Integer> integers=null;
+        try{
+            sqlSession=getSqlSession();
+            integers=sqlSession.selectList("getCanvasCount");
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            sqlSession.close();
+        }
+        return integers.get(0);
     }
 
     //删除油画
